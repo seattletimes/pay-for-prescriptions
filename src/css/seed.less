@@ -1,0 +1,108 @@
+@import "seattletimes";
+
+[ng-cloak] {
+  display: none;
+}
+
+.interactive {
+  font-family: @df-sans;
+  max-width: 970px;
+  padding: 20px;
+  margin: 20px auto;
+  border-top: 1px solid @df-light-gray;
+  border-bottom: 1px solid @df-light-gray;
+
+  @media @mobile {
+    padding: 20px 0;
+  }
+
+  h2 {
+    font-size: 20px;
+    margin-top: 0;
+  }
+
+  .chatter {
+    font-size: 16px;
+  }
+
+  .overload-warning {
+    background: @df-light-gray;
+    color: @df-middle-gray;
+    text-align: center;
+    padding: 8px;
+    font-style: italic;
+    font-size: 13px;
+  }
+}
+
+nav.advanced-controls {
+  text-align: right;
+  font-size: 15px;
+}
+
+.note, .source, .credit {
+  font-size: 15px;
+  color: @df-dark-gray;
+  font-style: italic;
+  margin: 0;
+  padding: 0;
+}
+
+.credit {
+  text-align: right;
+  text-transform: uppercase;
+}
+
+.doctor-table {
+  font-size: 15px;
+  width: 100%;
+  max-width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 16px;
+
+  thead th {
+    border-bottom: 1px solid @df-dark-gray;
+  }
+
+  tr:nth-child(2n-1) td {
+    background-color: lighten(@df-light-gray, 8%);
+  }
+
+  th, td {
+    text-align: left;
+    padding: 4px;
+
+    @media @mobile {
+      &.not-mobile {
+        display: none;
+      }
+    }
+
+    &.number {
+      text-align: right;
+    }
+
+    &.flag {
+      text-align: center;
+      font-weight: bold;
+    }
+
+    &[sort-field] {
+      cursor: pointer;
+      &::after {
+        content: "\21c5";
+        color: @df-light-gray;
+      }
+    }
+
+    &.sorted::after {
+      content: "\25b2";
+      color: @df-middle-gray;
+    }
+
+    &.sorted.down::after {
+      content: "\25bc";
+    }
+  }
+}
+

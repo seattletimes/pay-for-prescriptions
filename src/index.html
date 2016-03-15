@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+  <head>
+    <title><%= json.project.title %></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <%= t.include("partials/_head.html") %>
+  </head>
+  <body ng-app="doctor-payments">
+
+    <responsive-child>
+      <main class="interactive" ng-controller="TableController">
+
+        <h2>Explore payments to Washington doctors</h2>
+
+        <p class="chatter">
+          The table below contains more than 3,000 Washington doctors and the amount of money they received from drug companies in XXXX. Doctors who prescribed brand-name drugs significantly more than the average for their specialty are marked with <b>$</b> &mdash; those who far exceeded the average are marked with <b>$$</b>.
+        </p>
+
+        <nav class="advanced-controls">
+          <label for="search">Search doctors:</label>
+          <input id="search" ng-model="search" ng-keyup="updateSearch()">
+        </nav>
+
+        <div class="overload-warning" ng-show="overload">
+          Note: only the top 50 search results are shown. Add a more specific filter or search terms to see complete results.
+        </div>
+
+        <table class="doctor-table" ng-cloak>
+          <thead>
+            <th class="name" sort-field="last">Name
+            <th class="specialty not-mobile">Specialty
+            <th class="city not-mobile">City
+            <th class="total_claims number not-mobile" sort-field="total_claims">Total prescriptions
+            <th class="brand_claims number not-mobile" sort-field="brand-claims">Brand-name
+            <th class="payments number" sort-field="payments">Payments
+            <th class="outlier" sort-field="flag">Status *
+          </thead>
+
+          <tbody>
+            <tr ng-repeat="row in doctors">
+              <td class="name">{{row.last}}, {{row.first}}
+              <td class="specialty not-mobile">{{row.specialty}}
+              <td class="city not-mobile">{{row.city}}
+              <td class="total_claims number not-mobile">{{row.total_claims | number}}
+              <td class="brand_claims number not-mobile">{{row.brand_claims | number}}
+              <td class="payments number">${{row.payments | number:2}}
+              <td class="flag">
+                {{row.flag == 2 ? "$$" : row.flag == 1 ? "$" : "-"}}
+            </tr>
+          </tbody>
+
+        </table>
+
+        <p class="note">
+          * Each $ represents one standard deviation higher than the average for that physician's specialty.
+        </p>
+        <div class="source">Source: XXX</div>
+        <div class="credit">Thomas Wilburn / The Seattle Times</div>
+      </main>
+    </responsive-child>
+
+    <script>
+window.doctors = <%= JSON.stringify(csv.docs) %>;
+    </script>
+
+    <script src="app.js" async></script>
+    <% if (json.project.production) { %>
+    <%= !json.project.embedded ? t.include("partials/_foot.html") : "" %>
+    <%= t.include("partials/_workHere.html") %>
+    <% } %>
+  </body>
+</html>
