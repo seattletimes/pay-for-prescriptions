@@ -86,6 +86,12 @@ nav.advanced-controls {
     text-align: left;
     padding: 4px;
 
+    @media @tablet {
+      &.not-tablet {
+        display: none;
+      }
+    }
+
     @media @mobile {
       &.not-mobile {
         display: none;

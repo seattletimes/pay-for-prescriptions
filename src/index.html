@@ -35,9 +35,9 @@
         <table class="doctor-table" ng-cloak>
           <thead>
             <th class="name" sort-field="last">Name
-            <th class="specialty not-mobile">Specialty
-            <th class="city not-mobile">City
-            <th class="total_claims number not-mobile" sort-field="total_claims">Total prescriptions
+            <th class="specialty not-tablet">Specialty
+            <th class="city not-tablet">City
+            <th class="total_claims number not-mobile" sort-field="total_claims">Prescriptions
             <th class="brand_claims number not-mobile" sort-field="brand_claims">Brand-name
             <th class="payments number" sort-field="payments">Payments
             <th class="outlier" sort-field="flag">Status*
@@ -46,8 +46,8 @@
           <tbody>
             <tr ng-repeat="row in doctors">
               <td class="name">{{row.last}}, {{row.first}}
-              <td class="specialty not-mobile">{{row.specialty}}
-              <td class="city not-mobile">{{row.city}}
+              <td class="specialty not-tablet">{{row.specialty}}
+              <td class="city not-tablet">{{row.city}}
               <td class="total_claims number not-mobile">{{row.total_claims | number}}
               <td class="brand_claims number not-mobile">{{row.brand_claims | number}}
               <td class="payments number">${{row.payments | number:2}}
