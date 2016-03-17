@@ -12,19 +12,24 @@
     <responsive-child>
       <main class="interactive" ng-controller="TableController">
 
-        <h2>Explore payments to Washington doctors</h2>
+        <h2>Did your doctor take company cash?</h2>
 
         <p class="chatter">
-          The table below contains more than 3,000 Washington doctors and the amount of money they received from drug companies in XXXX. Doctors who prescribed brand-name drugs significantly more than the average for their specialty are marked with <b>$</b> &mdash; those who far exceeded the average are marked with <b>$$</b>.
-        </p>
+          An analysis by ProPublica, with cooperation from The Seattle Times, provides evidence of a link between drug-firm and medical-device  payments to doctors, including more than 3,000 in Washington.
+        <p class="chatter">
+          This searchable list includes doctors in five common medical specialties who prescribed more than 1,000 prescriptions for Medicare patients in 2014. Doctors who prescribed drugs at a high rate compared with their peers are marked with &#9679;. Those who prescribed drugs at a very high rate compared with other doctors in their field are marked &#9679;&#9679;.
 
         <nav class="advanced-controls">
+          <select ng-model="specialtyFilter" ng-change="updateSearch()">
+            <option value="">All specialties</option>
+            <option ng-repeat="s in specialties" value="{{s}}">{{s}}</option>
+          </select>
           <label for="search">Search doctors:</label>
           <input id="search" ng-model="search" ng-keyup="updateSearch()">
         </nav>
 
         <div class="overload-warning" ng-show="overload">
-          Note: only the top 50 search results are shown. Add a more specific filter or search terms to see complete results.
+          Note: only the top 20 search results are shown. Add a more specific filter or search terms to see complete results.
         </div>
 
         <table class="doctor-table" ng-cloak>
@@ -33,7 +38,7 @@
             <th class="specialty not-mobile">Specialty
             <th class="city not-mobile">City
             <th class="total_claims number not-mobile" sort-field="total_claims">Total prescriptions
-            <th class="brand_claims number not-mobile" sort-field="brand-claims">Brand-name
+            <th class="brand_claims number not-mobile" sort-field="brand_claims">Brand-name
             <th class="payments number" sort-field="payments">Payments
             <th class="outlier" sort-field="flag">Status *
           </thead>
@@ -47,16 +52,16 @@
               <td class="brand_claims number not-mobile">{{row.brand_claims | number}}
               <td class="payments number">${{row.payments | number:2}}
               <td class="flag">
-                {{row.flag == 2 ? "$$" : row.flag == 1 ? "$" : "-"}}
+                {{row.flag == 2 ? "&#9679;&#9679;" : row.flag == 1 ? "&#9679;" : "-"}}
             </tr>
           </tbody>
 
         </table>
 
         <p class="note">
-          * Each $ represents one standard deviation higher than the average for that physician's specialty.
+          * Each &#9679; represents one standard deviation above the mean for that doctor's specialty.
         </p>
-        <div class="source">Source: XXX</div>
+        <div class="source">Source: ProPublica</div>
         <div class="credit">Thomas Wilburn / The Seattle Times</div>
       </main>
     </responsive-child>

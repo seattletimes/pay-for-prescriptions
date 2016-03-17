@@ -19,28 +19,32 @@ var mobile = window.matchMedia ? window.matchMedia("(max-width: 480px)") : { mat
 
 var controller = function($scope, $filter) {
 
+  var specialties = {};
   var all = window.doctors;
   all.forEach(function(row) {
     row.first = titleCase(row.first);
     row.last = titleCase(row.last);
     row.city = titleCase(row.city);
     row.flag = row.outlier == "Very high" ? 2 : row.outlier == "High" ? 1 : 0;
+    specialties[row.specialty] = true;
   });
   var top5 = all.slice(0, 5);
   
+  $scope.search = "";
+  $scope.specialties = Object.keys(specialties);
   $scope.doctors = top5;
 
   var filterDocs = function() {
+    var filtered = $scope.specialtyFilter ? all.filter(d => d.specialty == $scope.specialtyFilter) : all;
     if ($scope.search) {
       var matcher = new RegExp($scope.search.replace(/\\/g, "\\\\"), "i");
-      $scope.doctors = all.filter(function(doc) {
+      $scope.doctors = filtered.filter(function(doc) {
         return matcher.test(doc.first) ||
           matcher.test(doc.last) ||
-          (!mobile.matches ? matcher.test(doc.city) : false) ||
-          (!mobile.matches ? matcher.test(doc.specialty) : false);
+          (!mobile.matches ? matcher.test(doc.city) : false);
       });
     } else {
-      $scope.doctors = all;
+      $scope.doctors = filtered;
     }
   };
 
