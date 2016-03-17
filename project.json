@@ -5,8 +5,8 @@
       "path": "loaded-scholar"
     },
     "live": {
-      "bucket": "",
-      "path": ""
+      "bucket": "projects.seattletimes.com",
+      "path": "2016/local/dollars-for-docs-table"
     }
   },
   "title": "",
@@ -16,6 +16,6 @@
   "tags": [],
   "image": "assets/social.jpg",
   "sheets": [],
-  "production": false,
+  "production": true,
   "embedded": true
 }
