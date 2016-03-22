@@ -57,6 +57,10 @@
           </tbody>
 
         </table>
+        <div class="pagination">
+          <a ng-class="{ disable: paginate == 0 }" ng-click="shiftPagination(-1)">&lt; Previous</a>
+          <a ng-class="{ disable: paginate > originalLength / 20 - 1 }" ng-click="shiftPagination(1)">Next &gt;</a>
+        </div>
 
         <p class="note">
           * Each &#9679; represents one standard deviation above the mean for that doctor's specialty.

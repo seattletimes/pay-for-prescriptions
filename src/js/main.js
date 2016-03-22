@@ -33,6 +33,19 @@ var controller = function($scope, $filter) {
   $scope.search = "";
   $scope.specialties = Object.keys(specialties);
   $scope.doctors = top5;
+  $scope.paginate = 0;
+  $scope.originalLength = 5;
+  
+  $scope.shiftPagination = function(delta) {
+    $scope.paginate += delta;
+    if ($scope.paginate < 0) $scope.paginate = 0;
+    if ($scope.paginage > $scope.doctors.length / SEARCH_LIMIT) {
+      $scope.paginate = Math.floor($scope.doctors.length / SEARCH_LIMIT)
+    }
+    filterDocs();
+    sortDocs();
+    trimDocs();
+  }
 
   var filterDocs = function() {
     var filtered = $scope.specialtyFilter ? all.filter(d => d.specialty == $scope.specialtyFilter) : all;
@@ -60,14 +73,16 @@ var controller = function($scope, $filter) {
   };
 
   var trimDocs = function() {
+    $scope.originalLength = $scope.doctors.length;
     $scope.overload = $scope.doctors.length > SEARCH_LIMIT;
-    $scope.doctors = $scope.doctors.slice(0, SEARCH_LIMIT);
-  }
+    $scope.doctors = $scope.doctors.slice($scope.paginate * SEARCH_LIMIT, $scope.paginate * SEARCH_LIMIT + SEARCH_LIMIT);
+  };
 
   $scope.updateSearch = require("./lib/debounce")(function() {
     filterDocs();
     if ($scope.sorted) sortDocs($scope.sorted, true);
     trimDocs();
+    $scope.paginate = 0;
     $scope.$apply();
   });
 
